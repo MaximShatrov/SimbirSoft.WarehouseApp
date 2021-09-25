@@ -1,0 +1,76 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 3-user_table_create
+      labels: create_user
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_role_id
+                    references: role(role)
+        - tagDatabase:
+            tag: create_user
+
+  - changeSet:
+      id: 3.1-user_table_fill
+      labels: create_user
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: login
+                  value: "admin"
+              - column:
+                  name: password
+                  value: "admin"
+              - column:
+                  name: role
+                  value: "ADMIN"
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: login
+                  value: "employee"
+              - column:
+                  name: password
+                  value: "employee"
+              - column:
+                  name: role
+                  value: "EMPLOYEE"
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: login
+                  value: "user"
+              - column:
+                  name: password
+                  value: "user"
+              - column:
+                  name: role
+                  value: "USER"
+        - tagDatabase:
+            tag: create_user

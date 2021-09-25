@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2-category_table_create
+      labels: create_category
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: c_id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+        - tagDatabase:
+            tag: create_category
+
+  - changeSet:
+      id: 2.1-category_table_fill
+      labels: fill_category
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - insert:
+            tableName: category
+            columns:
+              - column:
+                  name: name
+                  value: "Елочные игрушки"
+        - insert:
+            tableName: category
+            columns:
+              - column:
+                  name: name
+                  value: "Гирлянды"
+        - insert:
+            tableName: category
+            columns:
+              - column:
+                  name: name
+                  value: "Звезды"
+        - tagDatabase:
+            tag: fill_category
+

@@ -1,0 +1,78 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 4-item_table_create
+      labels: create_item
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - createTable:
+            tableName: item
+            columns:
+              - column:
+                  name: i_id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: description
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: amount
+                  type: integer
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: price
+                  type: integer
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: category_id
+                  type: serial
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_category_id
+                    references: category(c_id)
+
+        - tagDatabase:
+            tag: create_item
+
+  - changeSet:
+      id: 4.1-item_table_fill
+      labels: item_table_fill
+      author: Shatrov Maxim
+      schema: public
+      changes:
+        - insert:
+            tableName: item
+            columns:
+              - column:
+                  name: name
+                  value: "Test item."
+              - column:
+                  name: description
+                  value: "Test item description."
+              - column:
+                  name: amount
+                  value: "25"
+              - column:
+                  name: price
+                  value: "550"
+              - column:
+                  name: category_id
+                  value: "1"
+        - tagDatabase:
+            tag: item_table_fill
