@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item readItem(Integer id) throws EntityNotFoundException {
         if (itemRepository.existsById(id)) {
-            return itemRepository.getById(id);
+            return itemRepository.findById(id).get();
         }
         throw new EntityNotFoundException("Item with id:" + id + " not found.");
     }

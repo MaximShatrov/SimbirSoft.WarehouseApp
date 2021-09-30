@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User readUser(String login) throws EntityNotFoundException {
         if (userRepository.existsById(login)) {
-            return userRepository.getById(login);
+            return userRepository.findById(login).get();
         }
         throw new EntityNotFoundException("User with login:" + login + " not found.");
     }

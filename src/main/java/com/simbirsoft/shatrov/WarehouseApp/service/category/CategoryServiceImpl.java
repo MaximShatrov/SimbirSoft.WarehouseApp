@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category readCategory(Integer id) throws EntityNotFoundException {
         if (categoryRepository.existsById(id)) {
-            return categoryRepository.getById(id);
+            return categoryRepository.findById(id).get();
         }
         throw new EntityNotFoundException("Category with id:" + id + " not found.");
     }
