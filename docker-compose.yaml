@@ -1,0 +1,7 @@
+version: "1"
+services:
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRESS_DB: shop_warehouse

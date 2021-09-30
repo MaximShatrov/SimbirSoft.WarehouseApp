@@ -1,0 +1,16 @@
+databaseChangeLog:
+  #create and fill ROLEs
+  - include:
+      file: db/changelog/migrations/2021-09-16--1--init-table-role.yaml
+
+  #create and fill categories
+  - include:
+      file: db/changelog/migrations/2021-09-16--2--init-table-category.yaml
+
+  #create and fiull user table
+  - include:
+      file: db/changelog/migrations/2021-09-16--3--init-table-user.yaml
+
+  #create and fill item table
+  - include:
+      file: db/changelog/migrations/2021-09-16--4--init-table-item.yaml
