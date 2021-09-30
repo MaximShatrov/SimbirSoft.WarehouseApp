@@ -1,12 +1,11 @@
 package com.simbirsoft.shatrov.WarehouseApp.controller;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.*;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Category;
 
 import com.simbirsoft.shatrov.WarehouseApp.service.category.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

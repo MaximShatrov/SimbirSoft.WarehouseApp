@@ -1,8 +1,7 @@
 package com.simbirsoft.shatrov.WarehouseApp.service.category;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.EntityAlreadyExistsException;
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.EntityNotFoundException;
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.NullEntityException;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.EntityNotFoundException;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.NullEntityException;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Category;
 
 import java.util.List;

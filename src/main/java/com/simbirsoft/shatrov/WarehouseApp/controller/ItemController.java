@@ -1,6 +1,6 @@
 package com.simbirsoft.shatrov.WarehouseApp.controller;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.*;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Item;
 import com.simbirsoft.shatrov.WarehouseApp.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
