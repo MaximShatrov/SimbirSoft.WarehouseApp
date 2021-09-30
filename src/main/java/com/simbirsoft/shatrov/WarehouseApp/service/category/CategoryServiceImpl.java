@@ -1,5 +1,6 @@
 package com.simbirsoft.shatrov.WarehouseApp.service.category;
 
+import com.simbirsoft.shatrov.WarehouseApp.Exceptions.EntityAlreadyExistsException;
 import com.simbirsoft.shatrov.WarehouseApp.Exceptions.EntityNotFoundException;
 import com.simbirsoft.shatrov.WarehouseApp.Exceptions.NullEntityException;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Category;
@@ -24,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (category.getName() == null || category.getName().isEmpty() || category == null) {
             throw new NullEntityException("Category name is empty or NULL.");
         }
+        category.setId(null);
         categoryRepository.save(category);
     }
 

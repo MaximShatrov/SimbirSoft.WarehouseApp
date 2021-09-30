@@ -28,11 +28,10 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Category> createItem(@RequestBody Category category) {
-        HttpHeaders headers = new HttpHeaders();
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         try {
             categoryService.createCategory(category);
-            return new ResponseEntity<>(category, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(category, HttpStatus.CREATED);
         } catch (NullEntityException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -50,12 +49,10 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Category> updateItem(@RequestBody Category category, UriComponentsBuilder builder) {
-        HttpHeaders headers = new HttpHeaders();
-
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category, UriComponentsBuilder builder) {
         try {
             categoryService.updateCategory(category);
-            return new ResponseEntity<>(category, headers, HttpStatus.OK);
+            return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (NullEntityException | EntityNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,7 +60,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Category> deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
         try {
             categoryService.deleteCategory(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,7 +71,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Category>> getAllUsers() {
+    public ResponseEntity<List<Category>> getAllCategories() {
         try {
             return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
         } catch (EntityNotFoundException e) {

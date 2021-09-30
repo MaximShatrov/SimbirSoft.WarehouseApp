@@ -49,11 +49,9 @@ public class ItemController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> updateItem(@RequestBody Item item, UriComponentsBuilder builder) {
-        HttpHeaders headers = new HttpHeaders();
-
         try {
             itemService.updateItem(item);
-            return new ResponseEntity<>(item, headers, HttpStatus.OK);
+            return new ResponseEntity<>(item, HttpStatus.OK);
         } catch (NullEntityException | EntityNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

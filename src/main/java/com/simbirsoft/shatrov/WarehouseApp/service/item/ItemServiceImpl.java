@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void createItem(Item item) throws NullEntityException {
         if (itemFieldsCheck(item)) {
-            //debugMethod(item, "DEBUG");
+            item.setId(null);
             itemRepository.save(item);
             return;
         }

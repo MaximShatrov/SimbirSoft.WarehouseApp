@@ -28,10 +28,9 @@ public class UserController {
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        HttpHeaders headers = new HttpHeaders();
         try {
             userService.createUser(user);
-            return new ResponseEntity<>(user, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (NullEntityException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,11 +53,9 @@ public class UserController {
     @SneakyThrows
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> updateUser(@RequestBody User user, UriComponentsBuilder builder) {
-        HttpHeaders headers = new HttpHeaders();
-
         try {
             userService.updateUser(user);
-            return new ResponseEntity<>(user, headers, HttpStatus.OK);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (NullEntityException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
