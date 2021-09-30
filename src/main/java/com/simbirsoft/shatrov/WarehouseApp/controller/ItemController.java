@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -27,7 +26,7 @@ public class ItemController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> createItem(@RequestBody @Valid Item item) {
+    public ResponseEntity<Item> createItem(@RequestBody Item item) {
         HttpHeaders headers = new HttpHeaders();
         try {
             itemService.createItem(item);
@@ -49,7 +48,7 @@ public class ItemController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> updateItem(@RequestBody @Valid Item item, UriComponentsBuilder builder) {
+    public ResponseEntity<Item> updateItem(@RequestBody Item item, UriComponentsBuilder builder) {
         HttpHeaders headers = new HttpHeaders();
 
         try {

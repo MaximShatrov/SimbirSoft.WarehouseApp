@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -29,7 +28,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Category> createItem(@RequestBody @Valid Category category) {
+    public ResponseEntity<Category> createItem(@RequestBody Category category) {
         HttpHeaders headers = new HttpHeaders();
         try {
             categoryService.createCategory(category);
@@ -51,7 +50,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Category> updateItem(@RequestBody @Valid Category category, UriComponentsBuilder builder) {
+    public ResponseEntity<Category> updateItem(@RequestBody Category category, UriComponentsBuilder builder) {
         HttpHeaders headers = new HttpHeaders();
 
         try {

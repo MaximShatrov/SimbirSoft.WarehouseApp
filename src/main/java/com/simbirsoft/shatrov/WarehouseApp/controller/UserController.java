@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         HttpHeaders headers = new HttpHeaders();
         try {
             userService.createUser(user);
@@ -54,7 +53,7 @@ public class UserController {
 
     @SneakyThrows
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@RequestBody @Valid User user, UriComponentsBuilder builder) {
+    public ResponseEntity<User> updateUser(@RequestBody User user, UriComponentsBuilder builder) {
         HttpHeaders headers = new HttpHeaders();
 
         try {
