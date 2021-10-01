@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,50 +26,49 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    @PreAuthorize("hasAuthority('items:write')")
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> createItem(@RequestBody Item item) {
-        HttpHeaders headers = new HttpHeaders();
+    public ResponseEntity<?> createItem(@RequestBody Item item) {
         try {
             itemService.createItem(item);
-            return new ResponseEntity<>(item, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(item, HttpStatus.CREATED);
         } catch (NullEntityException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect item description.", HttpStatus.BAD_REQUEST);
         }
     }
 
+    @PreAuthorize("hasAuthority('items:read')")
     @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> readItem(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> readItem(@PathVariable("id") Integer id) {
         try {
             return new ResponseEntity<>(itemService.readItem(id), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Item with id:" + id + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 
+    @PreAuthorize("hasAuthority('items:write')")
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> updateItem(@RequestBody Item item, UriComponentsBuilder builder) {
+    public ResponseEntity<?> updateItem(@RequestBody Item item) {
         try {
             itemService.updateItem(item);
             return new ResponseEntity<>(item, HttpStatus.OK);
         } catch (NullEntityException | EntityNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Item not found or incorrect.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Item> deleteItem(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteItem(@PathVariable("id") Integer id) {
         try {
             itemService.deleteItem(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Item with id:" + id + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 
+    @PreAuthorize("hasAuthority('items:read')")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Item>> getAllItems() {
         try {

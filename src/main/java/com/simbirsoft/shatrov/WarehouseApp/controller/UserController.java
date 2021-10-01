@@ -3,13 +3,12 @@ package com.simbirsoft.shatrov.WarehouseApp.controller;
 import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.User;
 import com.simbirsoft.shatrov.WarehouseApp.service.user.UserService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -25,59 +24,59 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('users:write')")
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
             userService.createUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (NullEntityException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect user description!", HttpStatus.BAD_REQUEST);
         } catch (EntityAlreadyExistsException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("User with login: " + user.getLogin() + " already exists!", HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
+    @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "{login}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> readUser(@PathVariable("login") String login) {
+    public ResponseEntity<?> readUser(@PathVariable("login") String login) {
         try {
             return new ResponseEntity<>(userService.readUser(login), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User with login:" + login + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 
-    @SneakyThrows
+    @PreAuthorize("hasAuthority('users:write')")
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@RequestBody User user, UriComponentsBuilder builder) {
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
         try {
             userService.updateUser(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (NullEntityException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect user description!", HttpStatus.BAD_REQUEST);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("User with login:" + user.getLogin() + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 
+    @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "{login}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> deleteUser(@PathVariable("login") String login) {
+    public ResponseEntity<?> deleteUser(@PathVariable("login") String login) {
         try {
             userService.deleteUser(login);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User with login:" + login + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 
+    @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

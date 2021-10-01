@@ -69,10 +69,4 @@ public class ItemServiceImpl implements ItemService {
         return item != null && !item.getName().isEmpty() && !item.getDescription().isEmpty() &&
                 item.getAmount() != null && item.getPrice() != null;
     }
-
-    private void debugMethod(Item item, String string) {
-        System.err.println(string);
-        System.out.println(item.getCategory().getId());
-        System.out.println(item.getCategory().getName());
-    }
 }
