@@ -17,16 +17,21 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: password
-                  type: varchar(100)
+                  type: varchar(200)
                   constraints:
                     nullable: false
               - column:
                   name: role
-                  type: varchar(100)
+                  type: varchar(15)
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_role_id
-                    references: role(role)
+              - column:
+                  name: status
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+                    #foreignKeyName: fk_role_id
+                    #references: role(role)
         - tagDatabase:
             tag: create_user
 
@@ -44,10 +49,13 @@ databaseChangeLog:
                   value: "admin"
               - column:
                   name: password
-                  value: "admin"
+                  value: "$2a$12$5GUWB97gfth8G6j2eOW.gObkFWFMJyDZhUOBmtqdcheG99NuMfqUO"
               - column:
                   name: role
                   value: "ADMIN"
+              - column:
+                  name: status
+                  value: "ACTIVE"
         - insert:
             tableName: user
             columns:
@@ -56,10 +64,13 @@ databaseChangeLog:
                   value: "employee"
               - column:
                   name: password
-                  value: "employee"
+                  value: "$2a$12$/Mw6Qm6KdtE.D6FRWt7OFuIbtOKXYLBxTFnwNSzoF/Aee4/3BclMa"
               - column:
                   name: role
                   value: "EMPLOYEE"
+              - column:
+                  name: status
+                  value: "ACTIVE"
         - insert:
             tableName: user
             columns:
@@ -68,9 +79,27 @@ databaseChangeLog:
                   value: "user"
               - column:
                   name: password
-                  value: "user"
+                  value: "$2a$12$nbGrqlqLZ6uaFDPReTZbAertEmqP2fy72tXBydi/so1hp/qEuTokC"
               - column:
                   name: role
                   value: "USER"
+              - column:
+                  name: status
+                  value: "ACTIVE"
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: login
+                  value: "banned"
+              - column:
+                  name: password
+                  value: "$2a$12$sS7wYz1fnqFc.wWt3Vu3sedXN7elilEfKlrs.OtxJz0a43y8ppmY6"
+              - column:
+                  name: role
+                  value: "USER"
+              - column:
+                  name: status
+                  value: "BANNED"
         - tagDatabase:
             tag: create_user
