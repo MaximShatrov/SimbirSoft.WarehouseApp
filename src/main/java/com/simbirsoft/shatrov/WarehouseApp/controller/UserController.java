@@ -3,6 +3,13 @@ package com.simbirsoft.shatrov.WarehouseApp.controller;
 import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.User;
 import com.simbirsoft.shatrov.WarehouseApp.service.user.UserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +21,7 @@ import java.util.List;
 
 
 @RestController
+@Tag(name = "Users")
 @RequestMapping("/api/v1/users")
 public class UserController {
 
@@ -24,6 +32,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Create new user")
+    @ApiResponse(description = "User create success.", responseCode = "201",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
+    @ApiResponse(description = "User create failed. Wrong request.", responseCode = "400", content = @Content)
+    @ApiResponse(description = "User already exists.", responseCode = "406", content = @Content)
     @PreAuthorize("hasAuthority('users:write')")
     @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -37,6 +50,10 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get user's info")
+    @ApiResponse(description = "Get user's info success.", responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
+    @ApiResponse(description = "Item not found.", responseCode = "404", content = @Content)
     @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "{login}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> readUser(@PathVariable("login") String login) {
@@ -47,6 +64,11 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Edit user's info")
+    @ApiResponse(description = "Edit user's info success.", responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
+    @ApiResponse(description = "Edit user's info failed. Wrong request.", responseCode = "400", content = @Content)
+    @ApiResponse(description = "User not found", responseCode = "404", content = @Content)
     @PreAuthorize("hasAuthority('users:write')")
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -60,6 +82,9 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Delete user")
+    @ApiResponse(description = "Delete user success.", responseCode = "204", content = @Content)
+    @ApiResponse(description = "User delete failed. User not found.", responseCode = "404", content = @Content)
     @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "{login}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteUser(@PathVariable("login") String login) {
@@ -71,6 +96,10 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get list of users")
+    @ApiResponse(description = "Get list of users success.", responseCode = "200",
+            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = User.class))))
+    @ApiResponse(description = "Users not found.", responseCode = "404", content = @Content)
     @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers() {

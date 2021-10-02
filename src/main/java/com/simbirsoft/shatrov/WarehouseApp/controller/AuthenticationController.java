@@ -3,6 +3,12 @@ package com.simbirsoft.shatrov.WarehouseApp.controller;
 
 import com.simbirsoft.shatrov.WarehouseApp.security.AuthenticationRequestDTO;
 import com.simbirsoft.shatrov.WarehouseApp.security.JwtTokenProvider;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Authentication page")
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
@@ -28,6 +35,13 @@ public class AuthenticationController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    @Operation(summary = "JWT login URL")
+    @ApiResponse(description = "Login success.", responseCode = "200",
+            content = @Content(mediaType = "application/json", examples = @ExampleObject("{\n" +
+                    "    \"login\": \"admin\",\n" +
+                    "    \"token\": \"token value\"\n" +
+                    "}")))
+    @ApiResponse(description = "login:password pair invalid or banned!", responseCode = "403", content = @Content)
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO authRequest) {
         try {
