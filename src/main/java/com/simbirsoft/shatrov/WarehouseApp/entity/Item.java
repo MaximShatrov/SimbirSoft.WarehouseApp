@@ -1,10 +1,15 @@
 package com.simbirsoft.shatrov.WarehouseApp.entity;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "item")
 @Entity
 
@@ -30,4 +35,16 @@ public class Item {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
