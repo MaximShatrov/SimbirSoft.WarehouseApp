@@ -53,7 +53,7 @@ public class UserController {
     @Operation(summary = "Get user's info")
     @ApiResponse(description = "Get user's info success.", responseCode = "200",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
-    @ApiResponse(description = "Item not found.", responseCode = "404", content = @Content)
+    @ApiResponse(description = "User not found.", responseCode = "404", content = @Content)
     @PreAuthorize("hasAuthority('users:read')")
     @RequestMapping(value = "{login}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> readUser(@PathVariable("login") String login) {
