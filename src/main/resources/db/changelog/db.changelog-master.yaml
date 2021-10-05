@@ -1,7 +1,4 @@
 databaseChangeLog:
-  #create and fill ROLEs
-  - include:
-      file: db/changelog/migrations/2021-09-16--1--init-table-role.yaml
 
   #create and fill categories
   - include:

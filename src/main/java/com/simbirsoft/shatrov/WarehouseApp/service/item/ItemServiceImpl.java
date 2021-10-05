@@ -1,6 +1,6 @@
 package com.simbirsoft.shatrov.WarehouseApp.service.item;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.*;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Item;
 import com.simbirsoft.shatrov.WarehouseApp.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void createItem(Item item) throws NullEntityException {
         if (itemFieldsCheck(item)) {
-            //debugMethod(item, "DEBUG");
+            item.setId(null);
             itemRepository.save(item);
             return;
         }
@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item readItem(Integer id) throws EntityNotFoundException {
         if (itemRepository.existsById(id)) {
-            return itemRepository.getById(id);
+            return itemRepository.findById(id).get();
         }
         throw new EntityNotFoundException("Item with id:" + id + " not found.");
     }
@@ -68,11 +68,5 @@ public class ItemServiceImpl implements ItemService {
     private boolean itemFieldsCheck(Item item) {
         return item != null && !item.getName().isEmpty() && !item.getDescription().isEmpty() &&
                 item.getAmount() != null && item.getPrice() != null;
-    }
-
-    private void debugMethod(Item item, String string) {
-        System.err.println(string);
-        System.out.println(item.getCategory().getId());
-        System.out.println(item.getCategory().getName());
     }
 }

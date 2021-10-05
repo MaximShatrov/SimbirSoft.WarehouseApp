@@ -1,29 +1,45 @@
 package com.simbirsoft.shatrov.WarehouseApp.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "user", schema = "public")
 public class User {
 
     @Id
-    @NotNull
-    @NotEmpty
     @Column(name = "login", nullable = false)
     private String login;
 
-    @NotNull
-    @NotEmpty
+
     @Column(name = "password", nullable = false)
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role;
+    private Role role;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return Objects.equals(login, user.login);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

@@ -1,6 +1,6 @@
 package com.simbirsoft.shatrov.WarehouseApp.service.user;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.*;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.*;
 import com.simbirsoft.shatrov.WarehouseApp.entity.User;
 
 import java.util.List;

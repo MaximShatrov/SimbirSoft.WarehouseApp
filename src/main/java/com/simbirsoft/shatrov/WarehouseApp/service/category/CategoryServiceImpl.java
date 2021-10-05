@@ -1,7 +1,7 @@
 package com.simbirsoft.shatrov.WarehouseApp.service.category;
 
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.EntityNotFoundException;
-import com.simbirsoft.shatrov.WarehouseApp.Exceptions.NullEntityException;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.EntityNotFoundException;
+import com.simbirsoft.shatrov.WarehouseApp.service.Exceptions.NullEntityException;
 import com.simbirsoft.shatrov.WarehouseApp.entity.Category;
 import com.simbirsoft.shatrov.WarehouseApp.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
         if (category.getName() == null || category.getName().isEmpty() || category == null) {
             throw new NullEntityException("Category name is empty or NULL.");
         }
+        category.setId(null);
         categoryRepository.save(category);
     }
 
     @Override
     public Category readCategory(Integer id) throws EntityNotFoundException {
         if (categoryRepository.existsById(id)) {
-            return categoryRepository.getById(id);
+            return categoryRepository.findById(id).get();
         }
         throw new EntityNotFoundException("Category with id:" + id + " not found.");
     }

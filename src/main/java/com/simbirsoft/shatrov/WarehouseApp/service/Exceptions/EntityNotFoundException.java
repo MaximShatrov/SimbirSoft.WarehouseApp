@@ -1,4 +1,4 @@
-package com.simbirsoft.shatrov.WarehouseApp.Exceptions;
+package com.simbirsoft.shatrov.WarehouseApp.service.Exceptions;
 
 public class EntityNotFoundException extends Exception {
     public EntityNotFoundException() {
